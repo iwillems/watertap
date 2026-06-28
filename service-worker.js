@@ -1,6 +1,6 @@
 // Watertap service worker
 // Network-first for index.html, cache-first for everything else
-const CACHE = 'watertap-v1';
+const CACHE = 'watertap-v2';
 const APP_SHELL = [
   './',
   './index.html',

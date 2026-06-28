@@ -122,14 +122,17 @@
     width: 30px; height: 30px;
     display: flex; align-items: center; justify-content: center;
   }
-  .tap-pin svg { width: 30px; height: 30px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.55)); }
+  .tap-pin svg { width: 30px; height: 30px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35)) drop-shadow(0 0 1px rgba(0,0,0,0.45)); }
 
   /* User location dot */
   .me-dot {
     width: 22px; height: 22px; border-radius: 50%;
     background: var(--accent);
     border: 3px solid #fff;
-    box-shadow: 0 0 0 6px rgba(10,132,255,0.22), 0 2px 6px rgba(0,0,0,0.55);
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,0.35),
+      0 0 0 6px rgba(10,132,255,0.22),
+      0 2px 8px rgba(0,0,0,0.45);
   }
   .me-pulse {
     position: relative;
@@ -137,7 +140,7 @@
   }
   .me-pulse::before {
     content: ""; position: absolute; inset: -10px;
-    border-radius: 50%; background: rgba(10,132,255,0.18);
+    border-radius: 50%; background: rgba(10,132,255,0.28);
     animation: pulse 2.4s ease-out infinite;
   }
   @keyframes pulse {
@@ -168,9 +171,9 @@
   }
   .popup-route:active { opacity: 0.85; }
 
-  /* Hide Leaflet default attribution prefix on tiny screens */
-  .leaflet-control-attribution { font-size: 10px !important; background: rgba(0,0,0,0.5) !important; color: rgba(255,255,255,0.5) !important; }
-  .leaflet-control-attribution a { color: rgba(255,255,255,0.7) !important; }
+  /* Attribution styling */
+  .leaflet-control-attribution { font-size: 10px !important; background: rgba(255,255,255,0.78) !important; color: rgba(0,0,0,0.6) !important; }
+  .leaflet-control-attribution a { color: rgba(0,0,0,0.75) !important; }
   .leaflet-control-zoom { display: none; }
 </style>
 </head>
@@ -246,22 +249,22 @@ const TAPS=[{"id":8131,"n":"St. Hubertusweg 3, 's-Gravenhage","lat":52.09856,"ln
     preferCanvas: false
   }).setView([FALLBACK.lat, FALLBACK.lng], FALLBACK.zoom);
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     maxZoom: 19,
     subdomains: 'abcd',
-    attribution: '&copy; <a href="https://openstreetmap.org">OSM</a> &middot; &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    attribution: '&copy; <a href="https://openstreetmap.org">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
   }).addTo(map);
 
   // ----- Tap markers -----
   const dropletSVG =
     '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
       '<defs><radialGradient id="g" cx="50%" cy="40%" r="60%">' +
-        '<stop offset="0%" stop-color="#5ac8ff"/>' +
-        '<stop offset="100%" stop-color="#0a84ff"/>' +
+        '<stop offset="0%" stop-color="#3aa9ff"/>' +
+        '<stop offset="100%" stop-color="#0050b3"/>' +
       '</radialGradient></defs>' +
       '<path d="M12 2 C12 2 4 11 4 16 a8 8 0 0 0 16 0 C20 11 12 2 12 2 z" ' +
-        'fill="url(#g)" stroke="white" stroke-width="1.4" stroke-linejoin="round"/>' +
-      '<ellipse cx="9.5" cy="13" rx="2" ry="3" fill="rgba(255,255,255,0.45)"/>' +
+        'fill="url(#g)" stroke="white" stroke-width="1.6" stroke-linejoin="round"/>' +
+      '<ellipse cx="9.5" cy="13" rx="2" ry="3" fill="rgba(255,255,255,0.55)"/>' +
     '</svg>';
 
   const tapIcon = L.divIcon({
